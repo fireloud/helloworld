@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>homework5</title>
+
+    <link href="https://cdn.bootcss.com/material-design-icons/3.0.1/iconfont/material-icons.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+
+    <style>
+        .model{
+            position:fixed;
+            left: 50%;
+            top: 50%;
+            width: 400px;
+            height: 200px;
+            margin-left: -200px;
+            margin-top: -200px;
+            z-index: 10;
+            background: white;
+            border-radius: 3px;
+        }
+        .talk{
+            position: relative;
+            width: 380px;
+            margin: auto;
+            align-items: center;
+        }
+        .hide{
+            display: none;
+        }
+        .shade{
+            position: fixed;
+            left:0;
+            right:0;
+            top:0;
+            bottom:0;
+            opacity:0.6;
+            background-color:black;
+            z-index:9;
+        }
+
+        #closebtn{
+            width: 80px;
+            height: 50px;
+            background: red;
+        }
+    </style>
+
+    <script>
+        $(function () {
+            $("#button").click(function () {
+                let a = $(".hide");
+                a.fadeIn(100);
+                a.removeClass('hide');/*用remove和add把透明的页面单拎出来，然后操作*/
+
+            });
+            $("#closebtn").click(function () {
+                $('.model,.shade').addClass('hide');
+                $('.model,.shade').fadeOut(200);
+            })
+            $("#block").click(function () {
+                $('.model,.shade').addClass('hide');/*点击空白区域跳出模态框*/
+                $('.model,.shade').fadeOut(200);
+            })
+        })
+    </script>
+
+</head>
+<body>
+
+<div class="model hide">
+    <div class="talk">
+        <div class="header">
+            <h3>题目</h3>
+            <hr>
+        </div>
+        <div class="body">
+            <p>输入的内容</p>
+        </div>
+        <div class="footer">
+            <hr>
+            <button id="closebtn">close</button>
+        </div>
+    </div>
+</div>
+
+<div class="shade hide" id="block"></div>
+
+<div class="container">
+            <p>
+ 布局与样式
+                模态框容器，默认隐藏，显式时绝对定位覆盖在显式窗口
+                模态框容器背景色而非元素透明，否则容器内的元素也会透明，rgba()
+                模态框容器内对话框，显式声明宽度，居中，相对定位，从而可以添加渐入渐出效果
+                对话框，可包含header container footer部分，可添加下边线分割显式内容
+
+                jquery
+                当激活模态框时，模态框渐入
+                希望实现，当点击模态框内，对话框外，即空白区域时，关闭模态框。但空白区域不是独立的元素，而是模态框元素的一部分。即，无法通过选择器选取该区域
+                因此，可将关闭的点击事件监听注册在模态框容器。但是，当点击模态框内的对话框，一样会关闭模态框，从而无法实现与对话框的互交
+                事件的向上冒泡机制。当子元素事件被激活，一样会影响到父元素监听的事件。 即，当激活子元素点击事件，如果父元素也注册了点击事件，则也会激活父元素的点击事件。即，事件的冒泡传播
+                因此，可通过在子元素中阻止事件的冒泡，实现在对话框内操作时，不会影响到模态框容器
+                实现，对对话框监听点击，回调中返回false，即可阻止父元素模态框对点击事件的回调
+
+                可通过animate()方法，添加对话框的动态定位，从默认的顶端，渐变定位到距上30px，即对话框从上向下渐入；关闭模态框时，再将对话框渐变定位到顶端，即，从下向上渐出
+            </p>
+            <button id="button">点击激活模块框</button>
+</div>
+
+</body>
+</html>
